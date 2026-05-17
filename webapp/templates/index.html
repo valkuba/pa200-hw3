@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Newsletter</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Syne:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #0f0f0f; --surface: #1a1a1a; --border: #2e2e2e;
+            --accent: #c8f55a; --muted: #555; --text: #e8e8e8; }
+    body { background: var(--bg); color: var(--text);
+           font-family: 'DM Mono', monospace;
+           min-height: 100vh; display: grid; place-items: center; padding: 2rem; }
+    .card { background: var(--surface); border: 1px solid var(--border);
+            border-radius: 6px; padding: 2.5rem; width: 100%; max-width: 480px; }
+    h1 { font-family: 'Syne', sans-serif; color: var(--accent);
+         font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 2rem; }
+    label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 0.3rem; }
+    input, textarea {
+      width: 100%; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 3px; color: var(--text); font-family: 'DM Mono', monospace;
+      font-size: 0.85rem; padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; }
+    textarea { height: 120px; resize: vertical; }
+    input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+    .btn { width: 100%; background: var(--accent); color: #0f0f0f; border: none;
+           border-radius: 3px; padding: 0.75rem; font-family: 'DM Mono', monospace;
+           font-size: 0.85rem; font-weight: 500; cursor: pointer; letter-spacing: 0.05em; }
+    .btn:hover { opacity: 0.85; }
+    .flash { padding: 0.6rem 0.8rem; border-radius: 3px; font-size: 0.8rem;
+             margin-bottom: 1rem; border-left: 3px solid; }
+    .success { border-color: var(--accent); background: #c8f55a14; }
+    .error   { border-color: #ff5f5f;       background: #ff5f5f14; }
+    .pipeline { display: flex; gap: 0.3rem; align-items: center; flex-wrap: wrap;
+                font-size: 0.65rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .step { background: var(--bg); border: 1px solid var(--border);
+            padding: 0.2rem 0.5rem; border-radius: 2px; }
+    .arrow { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>Newsletter</h1>
+  <p class="sub">PA200 · HW3 · Async Messaging Demo</p>
+
+  <div class="pipeline">
+    <span class="step">Web App</span><span class="arrow">→</span>
+    <span class="step">Storage Queue</span><span class="arrow">→</span>
+    <span class="step">Azure Function</span><span class="arrow">→</span>
+    <span class="step">Log</span>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}
+      <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  {% endwith %}
+
+  <form method="POST" action="/send">
+    <label>Email příjemce</label>
+    <input type="email" name="email" placeholder="user@example.com" required>
+    <label>Text newsletteru</label>
+    <textarea name="message" placeholder="Obsah zprávy..." required></textarea>
+    <button type="submit" class="btn">ODESLAT DO FRONTY</button>
+  </form>
+</div>
+</body>
+</html>
