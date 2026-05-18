@@ -1,4 +1,5 @@
 import os, json
+import base64
 from flask import Flask, render_template, request, redirect, url_for, flash
 from azure.storage.queue import QueueClient
 
@@ -24,7 +25,9 @@ def send():
             client.create_queue()
         except Exception:
             pass
-        client.send_message(json.dumps({"email": email, "message": message}))
+        message = json.dumps({"email": email, "message": message})
+        encoded = base64.b64encode(message.encode()).decode()
+        client.send_message(encoded)
         flash(f"Zpráva pro {email} zařazena do fronty!", "success")
     except Exception as e:
         flash(f"Chyba: {e}", "error")
