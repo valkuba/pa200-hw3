@@ -3,39 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <title>Newsletter</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Syne:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --bg: #0f0f0f; --surface: #1a1a1a; --border: #2e2e2e;
-            --accent: #c8f55a; --muted: #555; --text: #e8e8e8; }
-    body { background: var(--bg); color: var(--text);
-           font-family: 'DM Mono', monospace;
-           min-height: 100vh; display: grid; place-items: center; padding: 2rem; }
-    .card { background: var(--surface); border: 1px solid var(--border);
-            border-radius: 6px; padding: 2.5rem; width: 100%; max-width: 480px; }
-    h1 { font-family: 'Syne', sans-serif; color: var(--accent);
-         font-size: 1.8rem; margin-bottom: 0.4rem; }
-    .sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 2rem; }
-    label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 0.3rem; }
+    :root {
+      --bg: #eef6ff;
+      --surface: #f9fbff;
+      --border: #d6e6f7;
+      --accent: #6db6ff;
+      --accent-strong: #3e8fe8;
+      --muted: #6f7f92;
+      --text: #1c2a3a;
+      --shadow: 0 12px 30px rgba(62, 143, 232, 0.12);
+    }
+    body {
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh; display: grid; place-items: center; padding: 2.5rem 1.5rem;
+      background:
+        radial-gradient(900px 500px at 10% -10%, #d9ecff 0%, transparent 60%),
+        radial-gradient(700px 400px at 110% 0%, #e7f2ff 0%, transparent 55%),
+        linear-gradient(180deg, #f4f9ff 0%, #e9f2ff 100%);
+    }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 2.6rem; width: 100%; max-width: 520px;
+      box-shadow: var(--shadow);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif; color: var(--accent-strong);
+      font-size: 2rem; margin-bottom: 0.4rem; letter-spacing: 0.01em;
+    }
+    .sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 2rem; }
+    label { font-size: 0.85rem; color: var(--muted); display: block; margin-bottom: 0.3rem; }
     input, textarea {
-      width: 100%; background: var(--bg); border: 1px solid var(--border);
-      border-radius: 3px; color: var(--text); font-family: 'DM Mono', monospace;
-      font-size: 0.85rem; padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; }
+      width: 100%; background: #ffffff; border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem; padding: 0.7rem 0.9rem; margin-bottom: 1.2rem;
+      box-shadow: 0 2px 8px rgba(109, 182, 255, 0.08);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
     textarea { height: 120px; resize: vertical; }
-    input:focus, textarea:focus { outline: none; border-color: var(--accent); }
-    .btn { width: 100%; background: var(--accent); color: #0f0f0f; border: none;
-           border-radius: 3px; padding: 0.75rem; font-family: 'DM Mono', monospace;
-           font-size: 0.85rem; font-weight: 500; cursor: pointer; letter-spacing: 0.05em; }
-    .btn:hover { opacity: 0.85; }
-    .flash { padding: 0.6rem 0.8rem; border-radius: 3px; font-size: 0.8rem;
-             margin-bottom: 1rem; border-left: 3px solid; }
-    .success { border-color: var(--accent); background: #c8f55a14; }
-    .error   { border-color: #ff5f5f;       background: #ff5f5f14; }
+    input:focus, textarea:focus {
+      outline: none; border-color: var(--accent-strong);
+      box-shadow: 0 0 0 3px rgba(62, 143, 232, 0.18);
+    }
+    .btn {
+      width: 100%; background: var(--accent-strong); color: #ffffff; border: none;
+      border-radius: 10px; padding: 0.85rem; font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer; letter-spacing: 0.04em;
+      box-shadow: 0 10px 18px rgba(62, 143, 232, 0.2);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+    }
+    .btn:hover {
+      background: #2f7fd3; transform: translateY(-1px);
+      box-shadow: 0 14px 22px rgba(62, 143, 232, 0.25);
+    }
+    .flash {
+      padding: 0.7rem 0.9rem; border-radius: 8px; font-size: 0.9rem;
+      margin-bottom: 1rem; border-left: 4px solid; background: #ffffff;
+    }
+    .success { border-color: var(--accent); background: #ecf5ff; }
+    .error   { border-color: #ff7b7b;       background: #fff1f1; }
     .pipeline { display: flex; gap: 0.3rem; align-items: center; flex-wrap: wrap;
-                font-size: 0.65rem; color: var(--muted); margin-bottom: 1.5rem; }
-    .step { background: var(--bg); border: 1px solid var(--border);
-            padding: 0.2rem 0.5rem; border-radius: 2px; }
-    .arrow { color: var(--accent); }
+                font-size: 0.75rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .step {
+      background: #f2f7ff; border: 1px solid var(--border);
+      padding: 0.3rem 0.6rem; border-radius: 999px;
+    }
+    .arrow { color: var(--accent-strong); }
   </style>
 </head>
 <body>
